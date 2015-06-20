@@ -1,0 +1,112 @@
+PIECES
+
+Any time a "power" is used, the piece is permanently "revealed" to
+the world.
+
+
+1  engineer
+
+   power: can kill a 4 IF moving (cannot kill 4 in pure defense)
+   this is a passive power (no need to declare anything)
+   as soon as a 4 is attacked, the piece is revealed
+
+2  expert
+
+   power: destroys bombs
+   this is a passive power (no need to declare anything)
+   as soon as a bomb is destroyed, the piece is revealed
+
+3  flash
+
+   power: can choose to move prior to production
+   the reveal occurs when the actions are revealed in phase 2
+
+4  train
+
+   power: As a bonus extra action, another friendly adjacent piece
+   can be direct to the former location of the 4
+   this only works when the 4 is moving and it survives
+   the reveal occurs when the actions are revealed in phase 2
+
+B  bomb
+
+   Esentially, a 5. It cannot move.
+
+   power: destroys anything other than 2.
+   the reveal occurs as result of it being attacked.
+
+0  factory
+
+   cannot be occupied, but can be destroyed by
+   anything. Attacking results in destruction since it will always
+   lose.
+
+   power: A new piece (any kind) is placed in an adjacent empty space.
+   the reveal occurse when the actions are revealed in phase 2
+
+
+*  The main base. Strictly speaking, it is not a piece, but a
+   place on the board.
+
+   New pieces are either placed ON the main base
+   or adjacent to it if unoccupied. If occupied by another player
+   (that players piece sits on it), then the base becomes 'owed'
+   by the player on it. If nothing occupies it, then it reverts
+   back to the original owner.
+
+Self-destructive moves are allowed. A piece can move to a 'friendly' piece, thus destroying it (or being destroyed by it.)
+
+Phases for each turn:
+
+   1. Each player secretly declares 'actions'. Each player has:
+     a. one action (any kind) if the player has at least one piece
+        on the board
+     b. one action (any kind) for each main base owned.
+     c. one 'production action' per mobile base FOR THAT mobile
+        base.
+     d. one 'train action' per train FOR THAT train
+   2. All 'actions' are revealed.
+   3. All 'early move action' by '3' pieces happen
+      If the '3' action causes conflict, then the conflict is resolved.
+   4. All 'production actions' happen. If a '3' now occupies the
+      space, then the production is cancelled.
+   5. All 'move actions' that are unimpeded happen. (aka the 'chase')
+   6. All 'move actions' that are in conflict are resolved.
+       Conflict:
+          a. possible reveals:
+             1. All 'involved' players see the pieces.
+                (players not involved see nothing.)
+             2. Nothing is revealed. But the loser can imply a
+                power level from the results.
+          b. If any of the pieces are 1, then any 4s are destroyed.
+          c. If any of the pieces are 2, then any 5s are destroyed.
+          d. Final resolution is based on relative value.
+          e. If the final winners are equal. all are destroyed and
+             the square is unoccupied.
+   7. All 'train move actions' that can still be made are done.
+      If the train piece was destroyed, the action does not happen.
+      If the piece originally 'tagged' is destroyed, the action
+      does not happen.
+      (In other words, enemy pieces are never moved.)
+      (And yes, newly produced pieces CAN be moved.)
+
+A player is never "out". Even if he has no pieces and no base,
+then the players simply takes no action. But if his main base
+becomes 'uncovered', for whatever reason, then he/she can begin
+production once more.
+
+To help with game ending:
+
+a player can "flag" surrender. If three players are flagged, then
+the remaining player is the winner. A player decides to put up
+(or takes down a flag) during phase 1.
+
+In the online game, if a player seems to not respond to the game
+anymore, a "stupid AI" takes over. The stupid AI puts up a flag
+if any player has twice the number of pieces as the AI.
+
+An AI win is never credited to the missing player. In fact, the
+game is no longer used for scoring.
+
+An AI loss, however, is no big deal. A formula is used based on
+the number of turns real players were in the game.
