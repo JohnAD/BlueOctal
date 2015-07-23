@@ -1,0 +1,18 @@
+Cross Platform Game
+
+Palm OS client:
+
+ HB -- Handheld BASIC
+   produced stand-alone .PRC files
+
+Windows/Linux/Mac client:
+
+ RealBasic
+   produces standalone apps on all 3 platforms
+   the $99 standard version is windows only
+   $400 upgrade to get cross-platform
+
+Linux Server:
+
+  plain gcc
+

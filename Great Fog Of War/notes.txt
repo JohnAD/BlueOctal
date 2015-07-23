@@ -1,0 +1,140 @@
+ftp user: tradmin
+
+password? joebob?
+
+
+greatfogofwar.com
+
+  points to /greatfogofwar
+  for www / ftp
+
+  database:
+    user: gfow (r/w)
+    password: Joebob98
+    user: gfowro (r/o)
+    password: JoeJoe1999
+
+Server: gfow.db.7014275.hostedresource.com (10.8.11.185 via TCP/IP)
+User: gfow@64.202.166.208
+
+FOR INSTALLER:
+  make sure you know where to put libcurl.dll files
+
+
+login.php response:
+
+<?xml version="1.0" encoding="UTF-8"?>
+<response>
+<auth>Yes</auth>
+<name>JohnD</name>
+<gamecount>1</gamecount>
+<game gid="1">
+  <opponent>Will</opponent>
+  <url>gs0000.greatfogofwar.com</url>
+  <lastplayed>2011-09-03 14:08:00</lastplayed>
+  <turn>1</turn>
+</game>
+</response>
+
+========================================================
+turn.php
+
+Get the data to start a turn.
+
+The <boardrow> entries are comma seperate values for each square on the board.:
+  0 = Fog
+  1-30 = Our pieces (5 at rank 1, etc. sequencially)
+  50 = empty field
+  100 = Enemy (not identified)
+  101-4 = enemy troop ranks
+  105 = enemy artillery
+  106 = enemy bomb team
+  "dead" pieces simply don't show up on the board
+<boardrow> does not appear until round 2.
+<lastrow> is identical, it simply shows the picture of the previous board. <lastrow> does not
+appear until round 3.
+
+The <lastmove> entries reflect the previous move.
+For turns 0,1,2 there will be no lastmove items.
+  Turn 0 = is the invite and accept stage.
+  Turn 1 = is the build stage
+  turn 2 = is the first move stage; but no historic moves are seen since the previous stage
+    simply "built" things. There was no actual move made.
+  Turn 3, etc.
+For artillery, instead of east, west, etc. It uses roteast, rotwest, etc. for rotation moves
+Artillery, can fire also. It uses fireeast, firewest, etc.
+The enemy and enemyloc are only used for artillery fire. Otherwise, it is self-evident what happenned.
+
+<response>
+<turn>1</turn>
+<boardrow number="1">xxxx</boardrow>
+<boardrow number="2">xxxx</boardrow>
+<artillery>EENSE</artillery>
+<lastrow number="1">xxxx</boardrow>
+<lastrow number="2">xxxx</boardrow>
+<lastmove sequence="1" piece="22" move="east" result="safe">
+<lastmove sequence="2" piece="24" move="east" result="loss" enemyloc="12,4">
+<lastmove sequence="3" piece="101" move="north" result="safe">
+</response>
+
+sQL:
+
+
+  boardstate
+     nGameIndex
+     nTurn
+     nPiece (1-30 for challenger, 101-130 for defender)
+     nRow
+     nColumn
+            this table contains the fully uncovered game board.
+            only contains pieces in play.
+            actual fog and/or clear field is determined programatically by turn.php
+            this same table is also used by the lastrow function
+            at the end of the game, only the last two turns are kept. All else is deleted.
+
+  moves
+     nGameIndex
+     nTurn
+     nPlayerIndex
+     nPiece
+     vcMove
+     vcResult
+     vcEnemyLoc
+            this table contains the moves and their results.
+            sendmove.php fills out the nGameIndex, nTurn, nPlayerIndex, nPiece, vcMove always
+            if the player completes the turn, then sendmove.php also fills out vcResult, vcEnemyLoc
+
+========================================================
+sendmove.php
+
+this function takes the players moves. See the 'moves' table as described above.
+If this is the player to complete the turn, it also:
+  loads the current board
+  verifies that the moves are legitimate (later)
+  resolves all the moves
+  creates a new board
+  adds to the vcResult and vcEnemyLoc field of 'moves' on behalf of each player.
+  updates the 'games' table: incr round number and reset the 'played' fields.
+  IF the game is in a Winning state, then that is also marked by flag. Zaps all but last two boards
+     and last set of moves.
+  TODO: add a past games viewer of some kind; so that the win state is marked.
+
+The "get" parameters are a simple:
+gid=N
+userindex=N
+p1=east
+p2=north
+p22=firewest
+p23=roteast
+...
+
+On round1, the setup round, the format is actually:
+p1=LOC3,2
+p2=LOC0,7
+...
+
+This script takes a while to execute for the last person to send a move because it actually calculates the result of the turn during execution.
+
+<response>
+<result>Good</result>
+</response>

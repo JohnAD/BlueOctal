@@ -1,0 +1,43 @@
+<html>  
+	<head>  
+		<title>GFOW</title>  
+		<script type="text/javascript">  
+			var surfacewidth = 480;
+			var unitwidth = surfacewidth/9;
+			var surfaceheight = 320;
+			var playheight = surfaceheight - 100;
+			var unitheight = playheight/5;
+
+			function drawoutline(ctx) {
+				var i,j;
+				for (i=0; i<9; i++) {
+					for (j=0; j<5; j++) {
+						ctx.strokeRect (i*unitwidth, j*unitheight, unitwidth, unitheight);
+					}
+				}
+			};
+			
+			function drawpiece(ctx, pieceid, x, y) {
+				var img = new Image();
+			    img.onload = function() {
+					ctx.drawImage(img, x*unitwidth+1, y*unitheight+1, unitwidth-2, unitheight-2);
+				};
+				img.src = 'pics/1-big.png';
+			};
+			function draw(){  
+				var canvas = document.getElementById('gfowsurface');  
+				if (canvas.getContext){  
+					var ctx = canvas.getContext('2d');  
+					drawoutline(ctx);
+					drawpiece(ctx,1,1,1);
+				}  
+			}  
+		</script>  
+		<style type="text/css">  
+			canvas { border: 1px solid black; }  
+		</style>  
+    </head>  
+    <body onload="draw();">  
+		<canvas id="gfowsurface" width="480" height="320"></canvas>  
+    </body>  
+</html>  
